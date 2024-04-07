@@ -2,10 +2,16 @@
 
 Public BattV
 Public cmp21
-Public UVe
-Public Temp
-Public SunDur
-Public DirIrra
+Public uv(2)
+Public csd(2)
+Public radiation
+Public uv_internal_temperature
+Public direct_irradiation
+
+Alias uv(1) = UVe
+Alias uv(2) = Temp
+Alias csd(1) = SunDur
+Alias csd(2) = DirIrra
 
 Units BattV=Volts
 Units cmp21=mV
@@ -13,6 +19,13 @@ Units UVe=mV
 Units Temp=mV
 Units SunDur=mV
 Units DirIrra=mV
+Units radiation=W/m^2
+Units uv_internal_temperature=C
+Units direct_irradiation=W/m^2
+
+Const pyranometer_sensitivity = 8.03                  'unique sensitivity for cmp21 pyranometer
+                                                      '(microV/W/m^2)
+Const pyranometer_mult = 1000/pyranometer_sensitivity '(W/m^2/mV)
 
 DataTable(Table1,True,-1)
 	DataInterval(0,60,Sec,10)
@@ -28,19 +41,40 @@ DataTable(Table2,True,-1)
 	Minimum(1,BattV,FP2,False,False)
 EndTable
 
+DataTable(cmp21_data,True,-1)
+	DataInterval(0,60,Sec,10)
+	Average (1,radiation,IEEE4,False)
+EndTable
+
+DataTable(uvset_data,True,-1)
+	DataInterval(0,60,Sec,10)
+	Average (1,UVe,FP2,False)
+	Average (1,uv_internal_temperature,FP2,False)
+EndTable
+
+DataTable(csd3_data,True,-1)
+	DataInterval(0,60,Sec,10)
+	Sample(1,SunDur,FP2)
+	Average (1,direct_irradiation,IEEE4,False)
+EndTable
+
 BeginProg
 	Scan(1,Sec,1,0)
 		Battery(BattV)
 
 		VoltDiff(cmp21,1,mV25,1,True,0,_50Hz,1,0)
+		radiation = cmp21 * pyranometer_mult
+        
+		VoltDiff(uv(),2,mV5000,2,True,0,_50Hz,1,0)
+		uv_internal_temperature = -42.835 + 46.057 * Temp - 12.526 * Temp^2 + 1.979 * Temp^3
 
-		VoltDiff(UVe,1,mV5000,2,True,0,_50Hz,1,0)
-		VoltDiff(Temp,1,mV5000,3,True,0,_50Hz,1,0)
-
-		VoltDiff(SunDur,1,mV2500,5,True,0,_50Hz,1,0)
-		VoltDiff(DirIrra,1,mV5000,6,True,0,_50Hz,1,0)
+		VoltDiff(csd(),2,mV2500,5,True,0,_50Hz,1,0)
+		direct_irradiation = DirIrra
 
 		CallTable(Table1)
 		CallTable(Table2)
+		CallTable(cmp21_data)
+		CallTable(uvset_data)
+		CallTable(csd3_data)
 	NextScan
 EndProg
