@@ -32,13 +32,13 @@ BeginProg
 	Scan(1,Sec,1,0)
 		Battery(BattV)
 
-		VoltDiff(cmp21,1,mV25,1,True,0,_60Hz,1,0)
+		VoltDiff(cmp21,1,mV25,1,True,0,_50Hz,1,0)
 
-		VoltDiff(UVe,1,mV5000,2,True,0,_60Hz,1,0)
-		VoltDiff(Temp,1,mV5000,3,True,0,_60Hz,1,0)
+		VoltDiff(UVe,1,mV5000,2,True,0,_50Hz,1,0)
+		VoltDiff(Temp,1,mV5000,3,True,0,_50Hz,1,0)
 
-		VoltDiff(SunDur,1,mV2500,5,True,0,_60Hz,1,0)
-		VoltDiff(DirIrra,1,mV5000,6,True,0,_60Hz,1,0)
+		VoltDiff(SunDur,1,mV2500,5,True,0,_50Hz,1,0)
+		VoltDiff(DirIrra,1,mV5000,6,True,0,_50Hz,1,0)
 
 		CallTable(Table1)
 		CallTable(Table2)
