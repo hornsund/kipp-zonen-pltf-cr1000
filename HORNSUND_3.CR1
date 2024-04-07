@@ -66,7 +66,7 @@ BeginProg
 		radiation = cmp21 * pyranometer_mult
         
 		VoltDiff(uv(),2,mV5000,2,True,0,_50Hz,1,0)
-		uv_internal_temperature = -42.835 + 46.057 * Temp - 12.526 * Temp^2 + 1.979 * Temp^3
+		uv_internal_temperature = -42.835 + 46.057 * Temp/1000.0 - 12.526 * (Temp/1000.0)^2 + 1.979 * (Temp/1000.0)^3
 
 		VoltDiff(csd(),2,mV2500,5,True,0,_50Hz,1,0)
 		direct_irradiation = DirIrra
