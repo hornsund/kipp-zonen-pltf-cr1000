@@ -6,7 +6,6 @@ Public BattV
 Public cmp21
 Public UVe
 Public Temp
-Public UVA
 Public SunDur
 Public DirIrra
 
@@ -14,7 +13,6 @@ Units BattV=Volts
 Units cmp21=mV
 Units UVe=mV
 Units Temp=mV
-Units UVA=mV
 Units SunDur=mV
 Units DirIrra=mV
 
@@ -44,8 +42,6 @@ BeginProg
 		VoltDiff(UVe,1,mV5000,2,True,0,_60Hz,1,0)
 		'Generic Differential Voltage measurements Temp
 		VoltDiff(Temp,1,mV5000,3,True,0,_60Hz,1,0)
-		'Generic Differential Voltage measurements UVA
-		VoltDiff(UVA,1,mV5000,4,True,0,_60Hz,1,0)
 		'Generic Differential Voltage measurements SunDur
 		VoltDiff(SunDur,1,mV2500,5,True,0,_60Hz,1,0)
 		'Generic Differential Voltage measurements DirIrra
